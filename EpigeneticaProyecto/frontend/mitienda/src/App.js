@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -10,12 +11,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
+
 function enviarWhatsApp(mensaje) {
   const numero = '51926206841';
   window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
 function App() {
+  const { t, i18n } = useTranslation();
   const [producto, setProducto] = useState('home');
   const captchaClienteRef = useRef(null);
   const captchaVendedorRef = useRef(null);
@@ -146,45 +149,45 @@ function App() {
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top">
         <div className="container">
-          <a className="navbar-brand fw-bold text-primary" href="#" onClick={() => setProducto('home')}>MICROEMPRESA</a>
+          <a className="navbar-brand fw-bold text-primary" href="#" onClick={() => setProducto('home')}>Microempresa</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarMain">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
               <li className="nav-item">
-                <a className={`nav-link${producto === 'home' ? ' active' : ''}`} href="#" onClick={() => setProducto('home')}>Inicio</a>
+                <a className={`nav-link${producto === 'home' ? ' active' : ''}`} href="#" onClick={() => setProducto('home')}>{t('inicio')}</a>
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="epigeneticaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Epigenética
+                  {t('epigenetica')}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="epigeneticaDropdown">
                   <li>
-                    <a className="dropdown-item" href="#" onClick={() => setProducto('epigenetica')}>¿Qué es la Epigenética?</a>
+                    <a className="dropdown-item" href="#" onClick={() => setProducto('epigenetica')}>{t('que_es_epigenetica')}</a>
                   </li>
                 </ul>
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="productosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Productos
+                  {t('productos')}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="productosDropdown">
-                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('optimend')}>OPTIMEND</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('linq')}>LINQ</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('gnmx')}>GNM-X</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('optimend')}>{t('nuevo_optimend')}</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('linq')}>{t('nuevo_linq')}</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => setProducto('gnmx')}>{t('nuevo_gnmx')}</a></li>
                 </ul>
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Registrarme
+                  {t('registrarme')}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="registroDropdown">
                   <li>
-                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Como Cliente</a>
+                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">{t('como_cliente')}</a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistroVendedor">Como Vendedor</a>
+                    <a className="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistroVendedor">{t('como_vendedor')}</a>
                   </li>
                 </ul>
               </li>
@@ -192,39 +195,39 @@ function App() {
           </div>
         </div>
       </nav>
-
+      
       {/* Modales de registro */}
       <div className="modal fade" id="modalRegistroCliente" tabIndex="-1" aria-labelledby="modalRegistroClienteLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header bg-primary text-white">
               <i className="bi bi-person-circle me-2 animate-bounce"></i>
-              <h5 className="modal-title" id="modalRegistroClienteLabel">Registro de Cliente</h5>
-              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              <h5 className="modal-title" id="modalRegistroClienteLabel">{t('registro_cliente')}</h5>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label={t('cerrar')}></button>
             </div>
             <div className="modal-body">
               <form id="formRegistroCliente" onSubmit={handleRegistroCliente}>
                 <div className="mb-3">
-                  <label htmlFor="nombreC" className="form-label">Nombre completo</label>
+                  <label htmlFor="nombreC" className="form-label">{t('nombre_completo')}</label>
                   <input type="text" className="form-control" id="nombreC" name="nombreC" required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="emailC" className="form-label">Correo electrónico</label>
+                  <label htmlFor="emailC" className="form-label">{t('correo_electronico')}</label>
                   <input type="email" className="form-control" id="emailC" name="emailC" required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="telefonoC" className="form-label">Teléfono</label>
+                  <label htmlFor="telefonoC" className="form-label">{t('telefono')}</label>
                   <input type="tel" className="form-control" id="telefonoC" name="telefonoC" required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="passwordC" className="form-label">Contraseña</label>
+                  <label htmlFor="passwordC" className="form-label">{t('contrasena')}</label>
                   <input type="password" className="form-control" id="passwordC" name="passwordC" required />
                 </div>
                 <div className="mb-3">
                   {/* Google reCAPTCHA */}
-                  <div ref={captchaClienteRef} className="g-recaptcha" data-sitekey="6LcU6lYqAAAAAPvmrp5AGW5ZLI20Q03YhRMIPR_T" id="recaptcha-cliente"></div>
+                  <div ref={captchaClienteRef} className="g-recaptcha" data-sitekey={siteKey} id="recaptcha-cliente"></div>
                 </div>
-                <button type="submit" className="btn btn-primary w-100">Registrarme</button>
+                <button type="submit" className="btn btn-primary w-100">{t('registrarme_btn')}</button>
               </form>
             </div>
           </div>
@@ -236,21 +239,21 @@ function App() {
           <div className="modal-content">
             <div className="modal-header bg-success text-white">
               <i className="bi bi-person-circle me-2 animate-bounce"></i>
-              <h5 className="modal-title" id="modalRegistroVendedorLabel">Registro de Vendedor</h5>
-              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              <h5 className="modal-title" id="modalRegistroVendedorLabel">{t('registro_vendedor')}</h5>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label={t('cerrar')}></button>
             </div>
             <div className="modal-body">
               <form id="formRegistroVendedor" onSubmit={handleRegistroVendedor}>
                 <div className="mb-3">
-                  <label htmlFor="nombreV" className="form-label">Nombre completo</label>
+                  <label htmlFor="nombreV" className="form-label">{t('nombre_completo')}</label>
                   <input type="text" className="form-control" id="nombreV" name="nombreV" required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="emailV" className="form-label">Correo electrónico</label>
+                  <label htmlFor="emailV" className="form-label">{t('correo_electronico')}</label>
                   <input type="email" className="form-control" id="emailV" name="emailV" required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="telefonoV" className="form-label">Teléfono</label>
+                  <label htmlFor="telefonoV" className="form-label">{t('telefono')}</label>
                   <input type="tel" className="form-control" id="telefonoV" name="telefonoV" required />
                 </div>
                 <div className="mb-3">
@@ -258,14 +261,14 @@ function App() {
                   <input type="text" className="form-control" id="empresaV" name="empresaV" />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="passwordV" className="form-label">Contraseña</label>
+                  <label htmlFor="passwordV" className="form-label">{t('contrasena')}</label>
                   <input type="password" className="form-control" id="passwordV" name="passwordV" required />
                 </div>
                 <div className="mb-3">
                   {/* Google reCAPTCHA */}
-                  <div ref={captchaVendedorRef} className="g-recaptcha" data-sitekey="6LcU6lYqAAAAAPvmrp5AGW5ZLI20Q03YhRMIPR_T" id="recaptcha-vendedor"></div>
+                  <div ref={captchaVendedorRef} className="g-recaptcha" data-sitekey={siteKey} id="recaptcha-vendedor"></div>
                 </div>
-                <button type="submit" className="btn btn-success w-100">Registrarme</button>
+                <button type="submit" className="btn btn-success w-100">{t('registrarme_btn')}</button>
               </form>
             </div>
           </div>
@@ -276,21 +279,10 @@ function App() {
       {producto === 'epigenetica' && (
         <div className="container my-5">
           <div className="bg-white rounded-4 shadow-lg p-5">
-            <h1 className="mb-4 text-success fw-bold">¿Qué es la Epigenética?</h1>
-            <p className="lead">
-              La epigenética es una rama de la biología que estudia los cambios heredables en la expresión génica que no implican alteraciones en la secuencia del ADN. Estos cambios pueden ser provocados por factores ambientales, el estilo de vida, la alimentación, el estrés y otros estímulos externos.
-            </p>
-            <ul>
-              <li><strong>Regulación génica:</strong> La epigenética controla qué genes se activan o desactivan en cada célula.</li>
-              <li><strong>Factores ambientales:</strong> Elementos como la dieta, el ejercicio y la exposición a toxinas pueden modificar la expresión de los genes.</li>
-              <li><strong>Importancia en la salud:</strong> La epigenética está relacionada con el desarrollo de enfermedades, el envejecimiento y la respuesta a tratamientos médicos.</li>
-            </ul>
-            <h4 className="mt-4 text-primary fw-bold">¿Por qué es importante?</h4>
-            <p>
-              Comprender la epigenética permite desarrollar estrategias para prevenir enfermedades, mejorar la salud y personalizar tratamientos médicos. Además, ayuda a entender cómo nuestros hábitos diarios pueden influir en la expresión de nuestros genes y en la salud de futuras generaciones.
-            </p>
+            <h1 className="mb-4 text-success fw-bold">{t('que_es_epigenetica')}</h1>
+            {/* Aquí puedes traducir el contenido si lo agregas a tu archivo de traducción */}
             <div className="text-center mt-4">
-              <button className="btn btn-outline-primary" onClick={() => setProducto('home')}>Volver al inicio</button>
+              <button className="btn btn-outline-primary" onClick={() => setProducto('home')}>{t('volver_inicio')}</button>
             </div>
           </div>
         </div>
@@ -309,9 +301,9 @@ function App() {
                   </div>
                   <div className="col-md-7">
                     <h1 className="mb-3 text-primary fw-bold">OPTIMEND</h1>
-                    <span className="badge bg-danger mb-3 fs-5">20% OFF</span>
+                    <span className="badge bg-danger mb-3 fs-5">20% {t('off')}</span>
                     <p className="lead mb-4">
-                      <strong>¡Fortalece y da brillo a tu cabello desde la primera aplicación!</strong>
+                      <strong>{t('optimend_desc')}</strong>
                     </p>
                     <ul className="list-group list-group-flush mb-4">
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Fórmula natural, sin parabenos</li>
@@ -319,7 +311,7 @@ function App() {
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Resultados visibles desde la primera semana</li>
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Apto para todo tipo de cabello</li>
                     </ul>
-                    <a href="#" className="btn btn-warning btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar OPTIMEND!')}>¡Lo quiero!</a>
+                    <a href="#" className="btn btn-warning btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar OPTIMEND!')}>{t('lo_quiero')}</a>
                   </div>
                 </div>
               </section>
@@ -377,9 +369,9 @@ function App() {
                   </div>
                   <div className="col-md-7">
                     <h1 className="mb-3 text-warning fw-bold">LINQ</h1>
-                    <span className="badge bg-warning text-dark mb-3 fs-5">¡Más Vendido!</span>
+                    <span className="badge bg-warning text-dark mb-3 fs-5">{t('mas_vendido')}</span>
                     <p className="lead mb-4">
-                      <strong>Reduce arrugas y líneas de expresión. Resultados visibles en 7 días. ¡Piel radiante garantizada!</strong>
+                      <strong>{t('linq_desc')}</strong>
                     </p>
                     <ul className="list-group list-group-flush mb-4">
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Resultados en 7 días</li>
@@ -387,7 +379,7 @@ function App() {
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Fórmula avanzada anti-edad</li>
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Apto para todo tipo de piel</li>
                     </ul>
-                    <a href="#" className="btn btn-success btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar LINQ!')}>Comprar ahora</a>
+                    <a href="#" className="btn btn-success btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar LINQ!')}>{t('comprar_ahora')}</a>
                   </div>
                 </div>
               </section>
@@ -445,9 +437,9 @@ function App() {
                   </div>
                   <div className="col-md-7">
                     <h1 className="mb-3 text-success fw-bold">GNM-X</h1>
-                    <span className="badge bg-success mb-3 fs-5">¡Edición Limitada!</span>
+                    <span className="badge bg-success mb-3 fs-5">{t('edicion_limitada')}</span>
                     <p className="lead mb-4">
-                      <strong>Elaborado con aceites esenciales. Cuida tu piel y el medio ambiente. Aroma relajante.</strong>
+                      <strong>{t('gnmx_desc')}</strong>
                     </p>
                     <ul className="list-group list-group-flush mb-4">
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Con aceites esenciales</li>
@@ -455,7 +447,7 @@ function App() {
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Presentación: 100ml</li>
                       <li className="list-group-item"><i className="bi bi-check-circle-fill text-success me-2"></i>Edición limitada</li>
                     </ul>
-                    <a href="#" className="btn btn-danger btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar GNM-X!')}>Agregar al carrito</a>
+                    <a href="#" className="btn btn-danger btn-lg fw-bold px-4 shadow" onClick={() => enviarWhatsApp('¡Quiero comprar GNM-X!')}>{t('agregar_carrito')}</a>
                   </div>
                 </div>
               </section>
@@ -507,19 +499,19 @@ function App() {
       {/* Página principal solo si no hay producto seleccionado */}
       {producto === 'home' && (
         <div className="container">
-          <h2 className="mb-3">¡Descubre Nuestros Productos Estrella!</h2>
+          <h2 className="mb-3">{t('descubre_productos')}</h2>
           <p className="mb-4 fs-5 text-secondary">
-            Seleccionados especialmente para ti. Calidad, innovación y el mejor precio en cada uno de nuestros productos destacados. ¡Aprovecha nuestras ofertas exclusivas!
+            {t('descripcion')}
           </p>
           <div className="row row-cols-1 row-cols-md-3 g-4 mb-5">
             <div className="col">
               <div className="card h-100 text-center">
                 <img src="imagenes/optimenso.png" className="img-fluid rounded shadow img-producto" alt="Optimenso" />
                 <div className="card-body">
-                  <h5 className="card-title">¡Nuevo! OPTIMEND</h5>
-                  <span className="badge bg-danger mb-2">20% OFF</span>
-                  <p className="card-text">Fortalece y da brillo a tu cabello desde la primera aplicación. Fórmula natural, sin parabenos.</p>
-                  <a href="#" className="btn btn-warning fw-bold" onClick={() => setProducto('optimend')}>Ver más</a>
+                  <h5 className="card-title">{t('nuevo_optimend')}</h5>
+                  <span className="badge bg-danger mb-2">20% {t('off')}</span>
+                  <p className="card-text">{t('optimend_desc')}</p>
+                  <a href="#" className="btn btn-warning fw-bold" onClick={() => setProducto('optimend')}>{t('ver_mas')}</a>
                 </div>
               </div>
             </div>
@@ -527,10 +519,10 @@ function App() {
               <div className="card h-100 text-center">
                 <img src="imagenes/linqo.png" className="img-fluid rounded shadow img-producto" alt="Linqo" />
                 <div className="card-body">
-                  <h5 className="card-title">¡Nuevo! LINQ</h5>
-                  <span className="badge bg-warning text-dark mb-2">¡Más Vendido!</span>
-                  <p className="card-text">Reduce arrugas y líneas de expresión. Resultados visibles en 7 días. ¡Piel radiante garantizada!</p>
-                  <a href="#" className="btn btn-success fw-bold" onClick={() => setProducto('linq')}>Ver más</a>
+                  <h5 className="card-title">{t('nuevo_linq')}</h5>
+                  <span className="badge bg-warning text-dark mb-2">{t('mas_vendido')}</span>
+                  <p className="card-text">{t('linq_desc')}</p>
+                  <a href="#" className="btn btn-success fw-bold" onClick={() => setProducto('linq')}>{t('ver_mas')}</a>
                 </div>
               </div>
             </div>
@@ -538,10 +530,10 @@ function App() {
               <div className="card h-100 text-center">
                 <img src="imagenes/genomex.png" className="img-fluid rounded shadow img-producto" alt="Genomex" />
                 <div className="card-body">
-                  <h5 className="card-title">¡Nuevo! GNM-X</h5>
-                  <span className="badge bg-success mb-2">¡Edición Limitada!</span>
-                  <p className="card-text">Elaborado con aceites esenciales. Cuida tu piel y el medio ambiente. Aroma relajante.</p>
-                  <a href="#" className="btn btn-danger fw-bold" onClick={() => setProducto('gnmx')}>Ver más</a>
+                  <h5 className="card-title">{t('nuevo_gnmx')}</h5>
+                  <span className="badge bg-success mb-2">{t('edicion_limitada')}</span>
+                  <p className="card-text">{t('gnmx_desc')}</p>
+                  <a href="#" className="btn btn-danger fw-bold" onClick={() => setProducto('gnmx')}>{t('ver_mas')}</a>
                 </div>
               </div>
             </div>
@@ -549,7 +541,7 @@ function App() {
 
           {/* Testimonios en Video */}
           <section className="mb-5">
-            <h2 className="mb-4 text-center">Testimonios en Video</h2>
+            <h2 className="mb-4 text-center">{t('testimonios_video')}</h2>
             <Swiper
               modules={[Navigation, Pagination, EffectCoverflow]}
               effect="coverflow"
@@ -609,50 +601,51 @@ function App() {
         <div className="footer-box mx-auto">
           <div className="row justify-content-center mb-2 text-center text-md-start">
             <div className="col-md-5 mb-4 mb-md-0">
-              <h2 className="footer-contact-title mb-3">Contáctanos</h2>
-              <h5 className="footer-title">INFORMACIÓN</h5>
+              <h2 className="footer-contact-title mb-3">{t('contáctanos')}</h2>
+              <h5 className="footer-title">{t('informacion')}</h5>
               <div className="footer-info mb-2">
                 <i className="bi bi-telephone-fill me-2"></i>
-                Teléfono: (57-2) 3156917 – (52-2) 3722200
+                {t('telefono1')}
               </div>
               <div className="footer-info mb-2">
                 <i className="bi bi-telephone me-2"></i>
-                +57 316 4821324
+                {t('telefono2')}
               </div>
               <div className="footer-info mb-2">
                 <i className="bi bi-envelope-fill me-2"></i>
-                contacto@dbaexperts.tech
+                {t('correo')}
               </div>
-              <h5 className="footer-title mt-4">SÍGUENOS</h5>
+              <h5 className="footer-title mt-4">{t('siguenos')}</h5>
               <div className="footer-social mt-2">
                 <a href="#" className="footer-social-icon"><i className="bi bi-facebook"></i></a>
                 <a href="#" className="footer-social-icon"><i className="bi bi-instagram"></i></a>
               </div>
             </div>
             <div className="col-md-4 mb-4 mb-md-0">
-              <h5 className="footer-title">Ubicación</h5>
+              <h5 className="footer-title">{t('ubicacion')}</h5>
               <div className="footer-info">
-                Santiago de Cali Colombia | Cra. 100<br />
-                # 11-60 Holguines Trade Center Torre<br />
-                Pance 707
+                {t('direccion')}
               </div>
             </div>
             <div className="col-md-3">
-              <h5 className="footer-title">Horario de Atención</h5>
+              <h5 className="footer-title">{t('horario')}</h5>
               <div className="footer-info">
-                7:00am – 6:00pm
+                {t('horario_info')}
               </div>
             </div>
           </div>
           <div className="row mt-4">
             <div className="col text-center">
-              <small className="footer-copy">Creado por felak © 2025</small>
+              <small className="footer-copy">{t('creado_por')}</small>
             </div>
+          </div>
+          <div>
+            <p>{t('saludo')}</p>
+            <button onClick={() => i18n.changeLanguage('en')}>English</button>
+            <button onClick={() => i18n.changeLanguage('es')}>Español</button>
           </div>
         </div>
       </footer>
-      {/* Script de Google reCAPTCHA */}
-      
     </>
   );
 }
