@@ -43,5 +43,8 @@
   "direccion": "Santiago de Cali Colombia | Cra. 100 # 11-60 Holguines Trade Center Torre Pance 707",
   "horario": "Horario de Atención",
   "horario_info": "7:00am – 6:00pm",
-  "creado_por": "Creado por felak ©"
+  "creado_por": "Creado por felak ©",
+  "no_hay_clientes": "No hay clientes registrados.",
+  "no_hay_vendedores": "No hay vendedores registrados.",
+  "empresa": "Empresa"
 }
