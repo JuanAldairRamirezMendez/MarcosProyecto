@@ -69,17 +69,22 @@ function MainPage(props) {
 
   // Renderizar el captcha SOLO cuando el modal esté abierto y el div esté en el DOM
   useEffect(() => {
-    if (modalClienteAbierto && window.grecaptcha && captchaClienteRef.current && !widgetIdCliente.current) {
-      widgetIdCliente.current = window.grecaptcha.render(captchaClienteRef.current, {
-        sitekey: siteKey,
-      });
-    }
-    if (modalVendedorAbierto && window.grecaptcha && captchaVendedorRef.current && !widgetIdVendedor.current) {
-      widgetIdVendedor.current = window.grecaptcha.render(captchaVendedorRef.current, {
-        sitekey: siteKey,
-      });
-    }
-  }, [modalClienteAbierto, modalVendedorAbierto]);
+  // Cuando el modal se abre, renderiza el captcha SOLO si no está renderizado
+  if (modalClienteAbierto && window.grecaptcha && captchaClienteRef.current) {
+    // Limpia el div antes de renderizar
+    captchaClienteRef.current.innerHTML = "";
+    widgetIdCliente.current = window.grecaptcha.render(captchaClienteRef.current, {
+      sitekey: siteKey,
+    });
+  }
+  if (modalVendedorAbierto && window.grecaptcha && captchaVendedorRef.current) {
+    captchaVendedorRef.current.innerHTML = "";
+    widgetIdVendedor.current = window.grecaptcha.render(captchaVendedorRef.current, {
+      sitekey: siteKey,
+    });
+  }
+}, [modalClienteAbierto, modalVendedorAbierto, i18n.language]);
+// ...existing code...
 
   const handleRegistroCliente = async (e) => {
     e.preventDefault();
