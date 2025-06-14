@@ -10,16 +10,17 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ClientesTabla from './components/ClientesTabla';
+import VendedoresTabla from './components/VendedoresTabla';
 
 function enviarWhatsApp(mensaje) {
   const numero = '51926206841';
   window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
-function App() {
-  const [clientes, setClientes] = useState([]);
-  const [vendedores, setVendedores] = useState([]);
+// Componente principal de la página (todo tu contenido menos la tabla)
+function MainPage(props) {
   const { t, i18n } = useTranslation();
   const [producto, setProducto] = useState('home');
   const captchaClienteRef = useRef(null);
@@ -79,23 +80,6 @@ function App() {
       });
     }
   }, [modalClienteAbierto, modalVendedorAbierto]);
-
-  useEffect(() => {
-  fetch('http://localhost:8080/api/RegistroCliente')
-    .then(res => res.json())
-    .then(data => {
-      console.log("Clientes recibidos:", data); // <-- Agrega esto
-      setClientes(data);
-    })
-    .catch(error => console.error("Error al obtener clientes:", error));
-}, []);
-
-useEffect(() => {
-  fetch('http://localhost:8080/api/vendedores')
-    .then(res => res.json())
-    .then(data => setVendedores(data))
-    .catch(err => console.error("Error cargando vendedores:", err));
-}, []);
 
   const handleRegistroCliente = async (e) => {
     e.preventDefault();
@@ -163,61 +147,22 @@ useEffect(() => {
       alert('Error de conexión');
     }
   };
+
+  // Botón Bootstrap destacado
+  const botonTabla = (
+    <a
+      href="/clientes"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn btn-success btn-lg mb-4 d-block mx-auto"
+      style={{ maxWidth: 300 }}
+    >
+      <i className="bi bi-table me-2"></i> Ver tabla de clientes
+    </a>
+  );
+
   return (
     <>
-    <div>
-    {/* Tabla de Clientes */}
-    {clientes.length > 0 && (
-      <div className="my-5">
-        <h3>Clientes Registrados</h3>
-        <table className="table table-bordered table-striped">
-          <thead className="table-primary">
-            <tr>
-              <th>Teléfono</th>
-              <th>Nombre</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map((cliente, idx) => (
-              <tr key={idx}>
-                <td>{cliente.telefono}</td>
-                <td>{cliente.nombre}</td>
-                <td>{cliente.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )}
-
-    {/* Tabla de Vendedores */}
-    {vendedores.length > 0 && (
-      <div className="my-5">
-        <h3>Vendedores Registrados</h3>
-        <table className="table table-bordered table-striped">
-          <thead className="table-primary">
-            <tr>
-              <th>Teléfono</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Empresa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vendedores.map((vendedor, idx) => (
-              <tr key={idx}>
-                <td>{vendedor.telefono}</td>
-                <td>{vendedor.nombre}</td>
-                <td>{vendedor.email}</td>
-                <td>{vendedor.empresa}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )}
-  </div>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top">
         <div className="container">
@@ -612,31 +557,7 @@ useEffect(() => {
           </div>
 
           {/* Tabla de clientes */}
-          {clientes.length > 0 && (
-            <div className="my-5">
-              <h3 className="mb-3">Clientes Registrados</h3>
-              <div className="table-responsive">
-                <table className="table table-bordered table-striped">
-                  <thead className="table-primary">
-                    <tr>
-                      <th>Teléfono</th>
-                      <th>Nombre</th>
-                      <th>Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {clientes.map((cliente, idx) => (
-                      <tr key={idx}>
-                        <td>{cliente.telefono}</td>
-                        <td>{cliente.nombre}</td>
-                        <td>{cliente.email}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          
 
           {/* Testimonios en Video */}
           <section className="mb-5">
@@ -743,9 +664,42 @@ useEffect(() => {
             <button onClick={() => i18n.changeLanguage('en')}>English</button>
             <button onClick={() => i18n.changeLanguage('es')}>Español</button>
           </div>
+          <div>
+    {/* Botón para abrir la tabla de clientes en otra pestaña */}
+    <a
+    href="/vendedores"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn btn-primary btn-lg mb-4 d-block mx-auto"
+    style={{ maxWidth: 300 }}
+    >
+    <i className="bi bi-person-badge me-2"></i>
+    Ver tabla de vendedores
+    </a>
+    <a
+      href="/clientes"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn btn-primary mb-3"
+    >
+      Ver tabla de clientes
+    </a>
+  </div>
         </div>
       </footer>
     </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/clientes" element={<ClientesTabla />} />
+        <Route path="/vendedores" element={<VendedoresTabla />} />
+      </Routes>
+    </Router>
   );
 }
 

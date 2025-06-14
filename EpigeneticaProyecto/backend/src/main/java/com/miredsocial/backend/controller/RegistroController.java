@@ -42,6 +42,10 @@ public class RegistroController {
     public void eliminarCliente(@PathVariable Integer telefono) {
         clienteRepo.deleteById(telefono);
     }
+@GetMapping("/RegistroVendedor")
+public List<RegistroVendedor> obtenerVendedoresRegistro() {
+    return vendedorRepo.findAll();
+}
 
     @PostMapping("/RegistroVendedor")
     public RegistroVendedor registrarVendedor(@RequestBody RegistroVendedor vendedor) {
