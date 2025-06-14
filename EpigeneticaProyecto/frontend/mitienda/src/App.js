@@ -18,6 +18,8 @@ function enviarWhatsApp(mensaje) {
 }
 
 function App() {
+  const [clientes, setClientes] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
   const { t, i18n } = useTranslation();
   const [producto, setProducto] = useState('home');
   const captchaClienteRef = useRef(null);
@@ -81,9 +83,19 @@ function App() {
   useEffect(() => {
   fetch('http://localhost:8080/api/RegistroCliente')
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log("Clientes recibidos:", data); // <-- Agrega esto
+      setClientes(data);
+    })
     .catch(error => console.error("Error al obtener clientes:", error));
-  }, []);
+}, []);
+
+useEffect(() => {
+  fetch('http://localhost:8080/api/vendedores')
+    .then(res => res.json())
+    .then(data => setVendedores(data))
+    .catch(err => console.error("Error cargando vendedores:", err));
+}, []);
 
   const handleRegistroCliente = async (e) => {
     e.preventDefault();
@@ -153,6 +165,59 @@ function App() {
   };
   return (
     <>
+    <div>
+    {/* Tabla de Clientes */}
+    {clientes.length > 0 && (
+      <div className="my-5">
+        <h3>Clientes Registrados</h3>
+        <table className="table table-bordered table-striped">
+          <thead className="table-primary">
+            <tr>
+              <th>Teléfono</th>
+              <th>Nombre</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {clientes.map((cliente, idx) => (
+              <tr key={idx}>
+                <td>{cliente.telefono}</td>
+                <td>{cliente.nombre}</td>
+                <td>{cliente.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+
+    {/* Tabla de Vendedores */}
+    {vendedores.length > 0 && (
+      <div className="my-5">
+        <h3>Vendedores Registrados</h3>
+        <table className="table table-bordered table-striped">
+          <thead className="table-primary">
+            <tr>
+              <th>Teléfono</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Empresa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vendedores.map((vendedor, idx) => (
+              <tr key={idx}>
+                <td>{vendedor.telefono}</td>
+                <td>{vendedor.nombre}</td>
+                <td>{vendedor.email}</td>
+                <td>{vendedor.empresa}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top">
         <div className="container">
@@ -545,6 +610,33 @@ function App() {
               </div>
             </div>
           </div>
+
+          {/* Tabla de clientes */}
+          {clientes.length > 0 && (
+            <div className="my-5">
+              <h3 className="mb-3">Clientes Registrados</h3>
+              <div className="table-responsive">
+                <table className="table table-bordered table-striped">
+                  <thead className="table-primary">
+                    <tr>
+                      <th>Teléfono</th>
+                      <th>Nombre</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {clientes.map((cliente, idx) => (
+                      <tr key={idx}>
+                        <td>{cliente.telefono}</td>
+                        <td>{cliente.nombre}</td>
+                        <td>{cliente.email}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           {/* Testimonios en Video */}
           <section className="mb-5">

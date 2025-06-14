@@ -17,7 +17,7 @@ import com.miredsocial.backend.repository.RegistroClienteRepository;
 import com.miredsocial.backend.repository.RegistroVendedorRepository;
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
 public class RegistroController {
 
     private final RegistroClienteRepository clienteRepo;
