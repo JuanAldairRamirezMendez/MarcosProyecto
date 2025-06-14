@@ -78,6 +78,13 @@ function App() {
     }
   }, [modalClienteAbierto, modalVendedorAbierto]);
 
+  useEffect(() => {
+  fetch('http://localhost:8080/api/RegistroCliente')
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Error al obtener clientes:", error));
+  }, []);
+
   const handleRegistroCliente = async (e) => {
     e.preventDefault();
     const nombre = e.target.nombreC.value;
