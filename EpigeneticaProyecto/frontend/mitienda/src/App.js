@@ -670,6 +670,7 @@ function MainPage(props) {
             <button onClick={() => i18n.changeLanguage('es')}>Español</button>
           </div>
           <div>
+            <hr />
     {/* Botón para abrir la tabla de clientes en otra pestaña */}
     <a
     href="/vendedores"

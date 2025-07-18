@@ -13,13 +13,23 @@ public class HomeController {
     @Autowired
     private MessageSource messageSource;
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home() {
-        return "Backend funcionando";
+        return "paginaUsuarios";
     }
 
     @GetMapping("/saludo")
     public String saludo(Locale locale) {
         return messageSource.getMessage("saludo", null, locale);
+    }
+
+    @GetMapping({"/index","/"})
+    public String inicio() {
+        return "index";
+    }
+    
+    @GetMapping("/admin")
+    public String admin() {
+        return "paginaAdmin";
     }
 }

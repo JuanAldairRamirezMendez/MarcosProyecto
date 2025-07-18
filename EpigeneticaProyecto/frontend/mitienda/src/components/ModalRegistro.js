@@ -54,17 +54,17 @@ const ModalRegistro = ({ show, handleClose, tipo }) => {
     let mensaje = '';
     if (tipo === 'cliente') {
       mensaje = `Registro de Cliente:%0A
-Nombre: ${form.nombre}%0A
-Correo: ${form.email}%0A
-Teléfono: ${form.telefono}%0A
-Contraseña: ${form.password}`;
+      Nombre: ${form.nombre}%0A
+      Correo: ${form.email}%0A
+      Teléfono: ${form.telefono}%0A
+      Contraseña: ${form.password}`;
     } else {
       mensaje = `Registro de Vendedor:%0A
-Nombre: ${form.nombre}%0A
-Correo: ${form.email}%0A
-Teléfono: ${form.telefono}%0A
-Empresa: ${form.empresa}%0A
-Contraseña: ${form.password}`;
+      Nombre: ${form.nombre}%0A
+      Correo: ${form.email}%0A
+      Teléfono: ${form.telefono}%0A
+      Empresa: ${form.empresa}%0A
+      Contraseña: ${form.password}`;
     }
     window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
     handleClose();
